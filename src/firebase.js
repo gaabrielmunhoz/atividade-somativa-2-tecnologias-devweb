@@ -7,12 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBNFjxaTp2TbLn3BSLVcIrX-x_8yqT7cmY",
-  authDomain: "atividade-somativa-2-tecdevweb.firebaseapp.com",
-  projectId: "atividade-somativa-2-tecdevweb",
-  storageBucket: "atividade-somativa-2-tecdevweb.firebasestorage.app",
-  messagingSenderId: "110939419914",
-  appId: "1:110939419914:web:a29de52287643674f576f3"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
