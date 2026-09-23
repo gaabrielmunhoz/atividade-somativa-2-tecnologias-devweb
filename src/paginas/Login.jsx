@@ -18,13 +18,12 @@ function Login(){
 
         try {
 
-            const verificarAcesso = await signInWithEmailAndPassword(
+            await signInWithEmailAndPassword(
                 auth,
                 email,
                 senha
             )
-            verificarAcesso()
-            setMensagem("Usuário logado com sucesso!")
+
             navigate("/principal")
 
         } catch (erro) {
@@ -59,8 +58,8 @@ function Login(){
                 <br />
                 {mensagem && <p>{mensagem}</p>}
             </form>
-            
-            <p>Não possuí conta?</p>
+
+            <p>Não possui uma conta?</p>
             <br />
             <button type="button" onClick={()=> navigate("/cadastro")}>Cadastre-se</button>
         </div>
