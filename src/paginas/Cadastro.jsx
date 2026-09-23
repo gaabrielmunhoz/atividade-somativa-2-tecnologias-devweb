@@ -74,7 +74,6 @@ function Cadastro(){
     }
 
     async function cancelar(){
-            await signOut(auth)
             navigate("/login")
         }
 
