@@ -4,6 +4,14 @@ import { onAuthStateChanged, signOut } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
 
+function formatarData(data){
+
+    if (!data) return ""
+
+    const [ano, mes, dia] = data.split("-")
+    return `${dia}/${mes}/${ano}`
+}
+
 function Principal(){
     const [usuario, setUsuario] = useState(null)
     const [mensagem, setMensagem] = useState("")
@@ -14,6 +22,7 @@ function Principal(){
     useEffect(()=> {
         const verificarUsuario= onAuthStateChanged(auth, async (usuarioAutenticado)=> {
             if (!usuarioAutenticado){
+                setCarregando(false)
                 navigate("/login")
                 return
             }
@@ -49,7 +58,6 @@ function Principal(){
 
     async function sair(){
             await signOut(auth)
-            setTimeout(()=> {navigate("/login")}, 1500)
         }
 
     return(
@@ -62,7 +70,7 @@ function Principal(){
                 <div>
                     <p>Nome: {usuario.nome}</p>
                     <p>Sobrenome: {usuario.sobrenome}</p>
-                    <p>Data de Nascimento: {usuario.dataNascimento}</p>
+                    <p>Data de Nascimento: {formatarData(usuario.dataNascimento)}</p>
                 </div>
             )}
             <br />
