@@ -73,6 +73,11 @@ function Cadastro(){
 
     }
 
+    async function cancelar(){
+            await signOut(auth)
+            navigate("/login")
+        }
+
     return(
         <div>
             <div>
@@ -109,6 +114,8 @@ function Cadastro(){
                     <button type="submit">Cadastrar</button>
                     <br />
                     {mensagem && <p>{mensagem}</p>}
+
+                    <button className="botao-cancelar" type="button" onClick={cancelar}>Cancelar</button>
                 </form>
             </div>
         </div>
