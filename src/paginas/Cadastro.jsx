@@ -60,7 +60,7 @@ function Cadastro(){
         } catch (erro) {
             console.log(erro)
 
-            if (erro.code === "auth/email-already-inuse"){
+            if (erro.code === "auth/email-already-in-use"){
                 setMensagem("Este e-mail já está em uso.")
             } else if (erro.code === "auth/weak-password") {
                 setMensagem("A senha deve possuir pelo menos 6 caracteres.")
@@ -70,9 +70,6 @@ function Cadastro(){
                 setMensagem("Não foi possível realizar o cadastro.")
             }
         }
-
-        console.log("Usuário cadastrado com sucesso!", {nome, sobrenome, dataNascimento, email})
-        navigate("/login")
 
     }
 
@@ -110,6 +107,7 @@ function Cadastro(){
                     <br />
 
                     <button type="submit">Cadastrar</button>
+                    <br />
                     {mensagem && <p>{mensagem}</p>}
                 </form>
             </div>
