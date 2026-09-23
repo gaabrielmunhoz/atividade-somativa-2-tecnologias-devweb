@@ -74,7 +74,7 @@ function Principal(){
                 </div>
             )}
             <br />
-            <button type="button" onClick={sair}>Sair</button>
+            <button className="botao-sair" type="button" onClick={sair}>Sair</button>
 
         </div>
     )
