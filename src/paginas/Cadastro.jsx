@@ -1,5 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth"
+import { doc, setDoc } from "firebase/firestore"
+import { auth, db } from "../firebase"
 
 function Cadastro(){
     const [nome, setNome] = useState('')
@@ -13,17 +16,63 @@ function Cadastro(){
 
     const navigate = useNavigate()
 
-    const salvarCadastro = (event) => {
+    const salvarCadastro = async (event) => {
         event.preventDefault()
+
+        setMensagem("")
+        
         if (!nome || !sobrenome || !dataNascimento || !email || !confirmarEmail || !senha || !confirmarSenha) {
             window.alert('Obrigatório preencher todos os campos.')
             return
         }
 
-        // futuramente preencher aqui com o código para salvar o formulário no firebase
+        if (email !== confirmarEmail) {
+            setMensagem("Os e-mails não coincidem.")
+            return
+        }
+
+        if (senha !== confirmarSenha) {
+            setMensagem("As senhas não coincidem.")
+            return
+        }
+
+        try {
+            const credencialUsuario = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                senha
+            )
+
+            const usuario = credencialUsuario.user
+
+            await setDoc(doc(db, "usuarios", usuario.uid), {
+                uid: usuario.uid,
+                nome: nome,
+                sobrenome: sobrenome,
+                dataNascimento: dataNascimento,
+                email: email
+            })
+
+            setMensagem("Usuário cadastrado com sucesso!")
+
+            await signOut(auth)
+            setTimeout(()=> {navigate("/login")}, 1500)
+        } catch (erro) {
+            console.log(erro)
+
+            if (erro.code === "auth/email-already-inuse"){
+                setMensagem("Este e-mail já está em uso.")
+            } else if (erro.code === "auth/weak-password") {
+                setMensagem("A senha deve possuir pelo menos 6 caracteres.")
+            } else if (erro.code === "auth/invalid-email") {
+                setMensagem("Informe um e-mail válido.")
+            } else {
+                setMensagem("Não foi possível realizar o cadastro.")
+            }
+        }
 
         console.log("Usuário cadastrado com sucesso!", {nome, sobrenome, dataNascimento, email})
-        navigate("/")
+        navigate("/login")
 
     }
 
@@ -61,6 +110,7 @@ function Cadastro(){
                     <br />
 
                     <button type="submit">Cadastrar</button>
+                    {mensagem && <p>{mensagem}</p>}
                 </form>
             </div>
         </div>
