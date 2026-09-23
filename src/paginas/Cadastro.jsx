@@ -13,8 +13,8 @@ function Cadastro(){
 
     const navigate = useNavigate()
 
-    const salvarCadastro = (mensagem) => {
-        mensagem.preventDefault()
+    const salvarCadastro = (event) => {
+        event.preventDefault()
         if (!nome || !sobrenome || !dataNascimento || !email || !confirmarEmail || !senha || !confirmarSenha) {
             window.alert('Obrigatório preencher todos os campos.')
             return
