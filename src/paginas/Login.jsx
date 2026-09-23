@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { auth, db } from "../firebase"
+import { auth } from "../firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
 
 
@@ -23,7 +23,8 @@ function Login(){
                 email,
                 senha
             )
-            setMensagem("Usuário logado com sucesso!", verificarAcesso.user)
+            verificarAcesso()
+            setMensagem("Usuário logado com sucesso!")
             navigate("/principal")
 
         } catch (erro) {
@@ -55,9 +56,13 @@ function Login(){
                 <br />
 
                 <button type="submit">Entrar</button>
+                <br />
                 {mensagem && <p>{mensagem}</p>}
-
             </form>
+            
+            <p>Não possuí conta?</p>
+            <br />
+            <button type="button" onClick={()=> navigate("/cadastro")}>Cadastre-se</button>
         </div>
     )
 }
