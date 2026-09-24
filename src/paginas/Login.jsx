@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { auth } from "../firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
+import Carregando from "../componentes/Carregando"
 
 
 function Login(){
@@ -9,12 +10,14 @@ function Login(){
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [mensagem, setMensagem] = useState("")
+    const [carregando, setCarregando] = useState(false)
 
     const navigate = useNavigate()
 
     const entrar = async (event) => {
         event.preventDefault()
         setMensagem("")
+        setCarregando(true)
 
         try {
 
@@ -28,6 +31,7 @@ function Login(){
 
         } catch (erro) {
             console.log(erro)
+            setCarregando(false)
             if (erro.code === "auth/invalid-email") {
                 setMensagem("E-mail inválido.")
             } else if (erro.code === "auth/user-not-found"){
@@ -44,6 +48,7 @@ function Login(){
 
     return(
         <div>
+            {carregando && <Carregando texto="Entrando..." />}
             <h1>Login</h1>
             <form onSubmit={entrar}>
                 <label htmlFor="email">E-mail</label>
@@ -54,7 +59,7 @@ function Login(){
                 <input type="password" id="senha" value={senha} onChange={(event)=> setSenha(event.target.value)} placeholder="Sua senha" required />
                 <br />
 
-                <button type="submit">Entrar</button>
+                <button type="submit" disabled={carregando}>Entrar</button>
                 <br />
                 {mensagem && <p>{mensagem}</p>}
             </form>

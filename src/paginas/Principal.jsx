@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
+import Carregando from "../componentes/Carregando"
 
 function formatarData(data){
 
@@ -53,7 +54,7 @@ function Principal(){
     }, [navigate])
 
     if (carregando){
-        return <p>Carregando...</p>
+        return <Carregando texto="Carregando seus dados..." />
     }
 
     async function sair(){

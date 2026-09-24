@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
+import Carregando from "../componentes/Carregando"
 
 function Cadastro(){
     const [nome, setNome] = useState('')
@@ -13,6 +14,7 @@ function Cadastro(){
     const [senha, setSenha] = useState('')
     const [confirmarSenha, setConfirmarSenha] = useState('')
     const [mensagem, setMensagem] = useState('')
+    const [carregando, setCarregando] = useState(false)
 
     const navigate = useNavigate()
 
@@ -36,6 +38,8 @@ function Cadastro(){
             return
         }
 
+        setCarregando(true)
+
         try {
             const credencialUsuario = await createUserWithEmailAndPassword(
                 auth,
@@ -58,6 +62,8 @@ function Cadastro(){
             await signOut(auth)
             setTimeout(()=> {navigate("/login")}, 1500)
         } catch (erro) {
+
+            setCarregando(false)
             console.log(erro)
 
             if (erro.code === "auth/email-already-in-use"){
@@ -80,6 +86,7 @@ function Cadastro(){
     return(
         <div>
             <div>
+                {carregando && <Carregando texto="Realizando cadastro..." />}
                 <h1>Cadastro</h1>
                 <form onSubmit={salvarCadastro}>
                     <label htmlFor="nome">Nome</label>
@@ -110,11 +117,11 @@ function Cadastro(){
                     <input type="password" id="confirmarSenha" value={confirmarSenha} onChange={(event) => setConfirmarSenha(event.target.value)} placeholder="Confirme a sua senha" required />
                     <br />
 
-                    <button type="submit">Cadastrar</button>
+                    <button type="submit" disabled={carregando}>Cadastrar</button>
                     <br />
                     {mensagem && <p>{mensagem}</p>}
 
-                    <button className="botao-cancelar" type="button" onClick={cancelar}>Cancelar</button>
+                    <button className="botao-cancelar" type="button" onClick={cancelar} disabled={carregando}>Cancelar</button>
                 </form>
             </div>
         </div>
