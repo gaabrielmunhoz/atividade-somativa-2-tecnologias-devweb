@@ -1,4 +1,4 @@
-function Carregando(){
+function Carregando({texto = "Carregando..."}){
     return(
         <div className="carregando-overlay">
             <div className="carregando-card">
