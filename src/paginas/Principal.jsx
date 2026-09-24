@@ -54,7 +54,7 @@ function Principal(){
     }, [navigate])
 
     if (carregando){
-        return <Carregando texto="Carregando seus dados..." />
+        return <Carregando texto="Verificando acesso..." />
     }
 
     async function sair(){

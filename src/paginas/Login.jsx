@@ -48,7 +48,6 @@ function Login(){
 
     return(
         <div>
-            {carregando && <Carregando texto="Entrando..." />}
             <h1>Login</h1>
             <form onSubmit={entrar}>
                 <label htmlFor="email">E-mail</label>
@@ -59,8 +58,16 @@ function Login(){
                 <input type="password" id="senha" value={senha} onChange={(event)=> setSenha(event.target.value)} placeholder="Sua senha" required />
                 <br />
 
-                <button type="submit" disabled={carregando}>Entrar</button>
-                <br />
+                <button type="submit" disabled={carregando}>
+                    {carregando ? (
+                        <div>
+                            <span className="spinner-botao"></span>
+                            Entrando...
+                        </div>
+                    ) : (
+                        "Entrar"
+                    )}
+                </button>
                 {mensagem && <p>{mensagem}</p>}
             </form>
 

@@ -86,7 +86,6 @@ function Cadastro(){
     return(
         <div>
             <div>
-                {carregando && <Carregando texto="Realizando cadastro..." />}
                 <h1>Cadastro</h1>
                 <form onSubmit={salvarCadastro}>
                     <label htmlFor="nome">Nome</label>
@@ -117,7 +116,16 @@ function Cadastro(){
                     <input type="password" id="confirmarSenha" value={confirmarSenha} onChange={(event) => setConfirmarSenha(event.target.value)} placeholder="Confirme a sua senha" required />
                     <br />
 
-                    <button type="submit" disabled={carregando}>Cadastrar</button>
+                    <button type="submit" disabled={carregando}>
+                        {carregando ? (
+                            <div>
+                                <span className="spinner-botao"></span>
+                                Cadastrando...
+                            </div>
+                        ) : (
+                            "Cadastrar"
+                        )}
+                    </button>
                     <br />
                     {mensagem && <p>{mensagem}</p>}
 
