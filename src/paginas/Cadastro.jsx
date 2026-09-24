@@ -73,7 +73,7 @@ function Cadastro(){
 
     }
 
-    async function cancelar(){
+    function cancelar(){
             navigate("/login")
         }
 
