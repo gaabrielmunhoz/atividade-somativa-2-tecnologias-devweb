@@ -21,7 +21,15 @@ function Principal(){
     const navigate = useNavigate()
 
     useEffect(()=> {
+
+        const tempoLimite = setTimeout(()=> {
+            setCarregando(false)
+            navigate("/login")
+        }, 3000)
+
         const verificarUsuario= onAuthStateChanged(auth, async (usuarioAutenticado)=> {
+            clearTimeout(tempoLimite)
+
             if (!usuarioAutenticado){
                 setCarregando(false)
                 navigate("/login")
@@ -50,7 +58,10 @@ function Principal(){
             }
         })
 
-        return ()=> verificarUsuario()
+        return ()=> {
+            clearTimeout(tempoLimite)
+            verificarUsuario()
+        }
     }, [navigate])
 
     if (carregando){
