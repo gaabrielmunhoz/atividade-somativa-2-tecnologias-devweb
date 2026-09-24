@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { auth } from "../firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import Carregando from "../componentes/Carregando"
 
 
 function Login(){

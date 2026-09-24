@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
-import Carregando from "../componentes/Carregando"
 
 function Cadastro(){
     const [nome, setNome] = useState('')
